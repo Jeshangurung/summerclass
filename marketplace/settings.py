@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-*!fc60jqmx2^queogk5&zxub6%+lx)$o*ua&_4ij@c56=pl+!@
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'summerclass-crjx.onrender.com', #render URL
+    'summerclass-b7ck.onrender.com', #render URL
     '12.0.0.1', # FOR LOCAL DEVELOPMENT
     'localhost', # OPTIONAL
 ]
