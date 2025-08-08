@@ -3,10 +3,10 @@ from django.dispatch import receiver
 from .models import Blog
 from utils.media_cleanup import delete_old_file_on_update, delete_file_on_delete
 
-@receiver(pre_save, sender=blog)
+@receiver(pre_save, sender=Blog)
 def blog_image_update_cleanup(sender, instance, **kwargs):
     delete_old_file_on_update(instance, blog,'blog_image')
 
-@receiver(post_delete, sender=blog)
+@receiver(post_delete, sender=Blog)
 def blog_image_delete_cleanup(sender, instance, **kwargs):
-    delete_old_file_on_update(instance, 'blog_image')
+    delete_file_on_delete(instance, 'blog_image')
