@@ -31,7 +31,8 @@ ALLOWED_HOSTS = [
     'summerclass-b7ck.onrender.com', #render URL
     '127.0.0.1', # FOR LOCAL DEVELOPMENT
     'localhost', # OPTIONAL
-    'jeshangurung.com.np' 
+    'jeshangurung.com.np',
+    'www.jeshangurung.com.np',
 ]
 
 
