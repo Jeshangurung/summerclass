@@ -1,6 +1,6 @@
 from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
-from .models import blog
+from .models import Blog
 from utils.media_cleanup import delete_old_file_on_update, delete_file_on_delete
 
 @receiver(pre_save, sender=blog)
