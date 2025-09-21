@@ -1,0 +1,104 @@
+<!-- Footer -->
+<footer class="section-footer">
+  <div class="container">
+    <!-- Main Footer Content -->
+    <div class="row mb-4">
+      <div class="col-lg-4 col-md-6 mb-4">
+        <h5 style="color: var(--apple-white); margin-bottom: 1.5rem;">About Us</h5>
+        <p style="color: var(--apple-gray-300); line-height: 1.6;">
+          We are committed to providing exceptional quality products and outstanding customer service. 
+          Our mission is to enhance your lifestyle with carefully curated items that meet the highest standards.
+        </p>
+      </div>
+      <div class="col-lg-2 col-md-6 mb-4">
+        <h5 style="color: var(--apple-white); margin-bottom: 1.5rem;">Quick Links</h5>
+        <ul style="list-style: none; padding: 0;">
+          <li style="margin-bottom: 0.5rem;">
+            <a href="{% url 'home' %}" style="color: var(--apple-gray-300); text-decoration: none; transition: var(--transition);">Home</a>
+          </li>
+          <li style="margin-bottom: 0.5rem;">
+            <a href="{% url 'store' %}" style="color: var(--apple-gray-300); text-decoration: none; transition: var(--transition);">Store</a>
+          </li>
+          <li style="margin-bottom: 0.5rem;">
+            <a href="#" style="color: var(--apple-gray-300); text-decoration: none; transition: var(--transition);">About</a>
+          </li>
+          <li style="margin-bottom: 0.5rem;">
+            <a href="#" style="color: var(--apple-gray-300); text-decoration: none; transition: var(--transition);">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <h5 style="color: var(--apple-white); margin-bottom: 1.5rem;">Customer Service</h5>
+        <ul style="list-style: none; padding: 0;">
+          <li style="margin-bottom: 0.5rem;">
+            <a href="#" style="color: var(--apple-gray-300); text-decoration: none; transition: var(--transition);">Shipping Info</a>
+          </li>
+          <li style="margin-bottom: 0.5rem;">
+            <a href="#" style="color: var(--apple-gray-300); text-decoration: none; transition: var(--transition);">Returns</a>
+          </li>
+          <li style="margin-bottom: 0.5rem;">
+            <a href="#" style="color: var(--apple-gray-300); text-decoration: none; transition: var(--transition);">Size Guide</a>
+          </li>
+          <li style="margin-bottom: 0.5rem;">
+            <a href="#" style="color: var(--apple-gray-300); text-decoration: none; transition: var(--transition);">FAQ</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <h5 style="color: var(--apple-white); margin-bottom: 1.5rem;">Connect With Us</h5>
+        <div style="margin-bottom: 1rem;">
+          <a href="#" style="color: var(--apple-gray-300); margin-right: 1rem; font-size: 1.5rem; text-decoration: none;">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="#" style="color: var(--apple-gray-300); margin-right: 1rem; font-size: 1.5rem; text-decoration: none;">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" style="color: var(--apple-gray-300); margin-right: 1rem; font-size: 1.5rem; text-decoration: none;">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" style="color: var(--apple-gray-300); font-size: 1.5rem; text-decoration: none;">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+        <p style="color: var(--apple-gray-300); margin-bottom: 0.5rem;">
+          <i class="fa fa-envelope" style="margin-right: 0.5rem;"></i>
+          {{site_setting.site_url}}
+        </p>
+        <p style="color: var(--apple-gray-300); margin-bottom: 0.5rem;">
+          <i class="fa fa-phone" style="margin-right: 0.5rem;"></i>
+          {{site_setting.phone_number}}
+        </p>
+      </div>
+    </div>
+    
+    <!-- Footer Bottom -->
+    <section class="footer-bottom border-top" style="border-top-color: var(--apple-gray-700) !important; padding-top: 2rem;">
+      <div class="row align-items-center">
+        <div class="col-md-4">
+          <p style="color: var(--apple-gray-400); margin-bottom: 0;">&copy; {{site_setting.copyright}}</p>
+        </div>
+        <div class="col-md-4 text-center">
+          <p style="color: var(--apple-gray-400); margin-bottom: 0;">
+            <span style="margin: 0 0.5rem;">{{site_setting.address}}</span>
+          </p>
+        </div>
+        <div class="col-md-4 text-right">
+          <div style="color: var(--apple-gray-400);">
+            <i class="fab fa-lg fa-cc-visa" style="margin-right: 0.5rem;"></i>
+            <i class="fab fa-lg fa-cc-paypal" style="margin-right: 0.5rem;"></i>
+            <i class="fab fa-lg fa-cc-mastercard"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</footer>
+
+<script>
+  $(document).ready(function(){
+    $('.thumb a').click(function(e){
+      e.preventDefault();
+      $('.mainImage img').attr('scr', $(this).attr("href"));
+    })
+  })
+</script>

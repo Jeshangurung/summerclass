@@ -1,0 +1,172 @@
+{% extends 'master/base.html'%} 
+{% load static %} 
+{%block content%}
+
+<!-- Product Detail Section -->
+<section class="section-content">
+  <div class="container">
+    <!-- Product Card -->
+    <div class="card" style="border-radius: var(--border-radius-large); overflow: hidden;">
+      <div class="row no-gutters">
+        <!-- Product Image -->
+        <aside class="col-lg-6">
+          <div class="gallery-wrap" style="padding: 2rem;">
+            <div class="img-big-wrap" style="border-radius: var(--border-radius); overflow: hidden; box-shadow: var(--shadow-medium);">
+              <a href="#">
+                <img src="{{product.images.url}}" style="width: 100%; height: 400px; object-fit: cover;" alt="{{product.product_name}}" />
+              </a>
+            </div>
+          </div>
+        </aside>
+        
+        <!-- Product Info -->
+        <main class="col-lg-6" style="padding: 2rem;">
+          <form action="{% url 'add_cart' product.id %}" method="POST">
+            {% csrf_token %}
+            <article class="content-body">
+              <h1 class="title" style="color: var(--apple-black); margin-bottom: 1.5rem; font-size: 2rem;">{{product.product_name}}</h1>
+
+              <div class="mb-4">
+                <span class="price" style="font-size: 2rem; font-weight: var(--font-weight-bold); color: var(--apple-black);">Rs. {{product.price}}</span>
+              </div>
+
+              <p style="color: var(--apple-gray-600); line-height: 1.6; margin-bottom: 2rem;">{{product.description}}</p>
+
+              <hr style="border-color: var(--apple-gray-200); margin: 2rem 0;" />
+              
+              <!-- Color Selection -->
+              {% if product.variation_set.colors %}
+              <div class="row mb-3">
+                <div class="item-option-select">
+                  <h6 style="color: var(--apple-black); font-weight: var(--font-weight-semibold); margin-bottom: 1rem;">Choose Color</h6>
+                  <select name="color" class="form-control" required style="border-radius: var(--border-radius-small);">
+                    <option value="" disabled selected>Select Color</option>
+                    {% for i in product.variation_set.colors %}
+                    <option value="{{ i.variation_value | lower}}">{{i.variation_value | capfirst}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              {% endif %}
+
+              <!-- Size Selection -->
+              {% if product.variation_set.sizes %}
+              <div class="row mb-3">
+                <div class="item-option-select">
+                  <h6 style="color: var(--apple-black); font-weight: var(--font-weight-semibold); margin-bottom: 1rem;">Select Size</h6>
+                  <select name="size" class="form-control" style="border-radius: var(--border-radius-small);">
+                    <option value="" disabled selected>Select Size</option>
+                    {% for i in product.variation_set.sizes %}
+                    <option value="{{ i.variation_value | lower }}">{{i.variation_value | capfirst}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              {% endif %}
+              
+              <hr style="border-color: var(--apple-gray-200); margin: 2rem 0;" />
+              
+              <!-- Product Buttons -->
+              {% include 'store/includes/new_buttons.html' %}
+            </article>
+          </form>
+        </main>
+      </div>
+    </div>
+
+
+    {# ---------- Main Product Content ---------- #}
+<section class="section-content padding-y">
+  <div class="container">
+    <div class="row">
+      {# ---------- Product Gallery ---------- #}
+      <div class="col-lg-6">
+        <div class="product-main">
+          <div class="product-gallery">
+            {% if product.images %}
+              <img src="{{ product.images.url }}" alt="{{ product.product_name|default:'Product Image' }}" class="main-image" id="mainImage">
+            {% else %}
+              <div class="placeholder-image">
+                <i class="fas fa-image fa-5x text-muted"></i>
+                <p class="text-muted mt-2">No Image Available</p>
+              </div>
+            {% endif %}
+          </div>
+          
+          {% if product.images or product_gallery %}
+            <div class="p-3">
+              <div class="thumbnail-grid">
+                {% if product.images %}
+                  <img src="{{ product.images.url }}" alt="Thumbnail" class="thumbnail active" onclick="changeImage(this, '{{ product.images.url }}')">
+                {% endif %}
+                
+                {% for img in product_gallery %}
+                  <img src="{{ img.image.url }}" alt="Gallery Image" class="thumbnail" onclick="changeImage(this, '{{ img.image.url }}')">
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+    <!-- Customer Reviews Section -->
+    <div class="row mt-5">
+      <div class="col-lg-9">
+        <header class="section-heading mb-4">
+          <h3 style="color: var(--apple-black); font-weight: var(--font-weight-semibold);">Customer Reviews</h3>
+        </header>
+
+        <article class="card mb-3" style="border-radius: var(--border-radius);">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <img
+                src="{%static 'images/avatars/avatar1.jpg'%}"
+                class="rounded-circle"
+                style="width: 50px; height: 50px; object-fit: cover; margin-right: 1rem;"
+                alt="User Avatar"
+              />
+              <div>
+                <h6 class="mb-0" style="color: var(--apple-black); font-weight: var(--font-weight-semibold);">Mike John</h6>
+                <small style="color: var(--apple-gray-500);">24.04.2020</small>
+              </div>
+            </div>
+            <p style="color: var(--apple-gray-600); line-height: 1.6; margin-bottom: 0;">
+              "Exceptional quality and fast delivery. This product exceeded my expectations. 
+              The attention to detail and craftsmanship is outstanding. Highly recommended!"
+            </p>
+          </div>
+        </article>
+
+        <div class="row">
+          {%include 'store/includes/reviews.html' %}
+        </div>
+
+        <article class="card mb-3" style="border-radius: var(--border-radius);">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <img
+                src="{%static 'images/avatars/avatar2.jpg'%}"
+                class="rounded-circle"
+                style="width: 50px; height: 50px; object-fit: cover; margin-right: 1rem;"
+                alt="User Avatar"
+              />
+              <div>
+                <h6 class="mb-0" style="color: var(--apple-black); font-weight: var(--font-weight-semibold);">Sarah Wilson</h6>
+                <small style="color: var(--apple-gray-500);">22.04.2020</small>
+              </div>
+            </div>
+            <p style="color: var(--apple-gray-600); line-height: 1.6; margin-bottom: 0;">
+              "Perfect fit and excellent material quality. The design is modern and elegant. 
+              I love how it complements my style. Will definitely purchase again!"
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+{% endblock %}
+

@@ -1,0 +1,149 @@
+{% extends 'master/base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Page Header -->
+<section class="section-header">
+  <div class="container">
+    {% if keyword %}
+      <h1 class="text-center">{{ keyword }}</h1>
+      <p class="text-center text-muted">{{ product_count }} items found for "{{ keyword }}"</p>
+    {% else %}
+      <h1 class="text-center">Our Collection</h1>
+      <p class="text-center text-muted">Discover our carefully curated selection of premium products</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="section-content">
+  <div class="container">
+    <div class="row">
+      <!-- Sidebar Filters -->
+      <aside class="col-lg-3 col-md-4 mb-4">
+        <div class="card">
+          <!-- Categories Filter -->
+          <div class="card-header">
+            <h6 class="mb-0" style="color: var(--apple-black); font-weight: var(--font-weight-semibold);">
+              <i class="fa fa-th-large mr-2"></i>Categories
+            </h6>
+          </div>
+          <div class="card-body">
+            <ul style="list-style: none; padding: 0;">
+              <li style="margin-bottom: 0.75rem;">
+                <a href="{% url 'store' %}" style="color: var(--apple-gray-600); text-decoration: none; transition: var(--transition); display: block; padding: 0.5rem 0;">
+                  All Products
+                </a>
+              </li>
+              {% for category in links %}
+              <li style="margin-bottom: 0.75rem;">
+                <a href="{{ category.get_url }}" style="color: var(--apple-gray-600); text-decoration: none; transition: var(--transition); display: block; padding: 0.5rem 0;">
+                  {{category.category_name}}
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div class="card mt-4">
+          <div class="card-header">
+            <h6 class="mb-0" style="color: var(--apple-black); font-weight: var(--font-weight-semibold);">
+              <i class="fa fa-dollar-sign mr-2"></i>Price Range
+            </h6>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label style="color: var(--apple-gray-600); font-size: 0.9rem;">Min</label>
+                <select class="form-control" style="font-size: 0.9rem;">
+                  <option value="0">$0</option>
+                  <option value="50">$50</option>
+                  <option value="100">$100</option>
+                  <option value="150">$150</option>
+                  <option value="200">$200</option>
+                  <option value="500">$500</option>
+                  <option value="1000">$1000</option>
+                </select>
+              </div>
+              <div class="form-group col-6">
+                <label style="color: var(--apple-gray-600); font-size: 0.9rem;">Max</label>
+                <select class="form-control" style="font-size: 0.9rem;">
+                  <option value="50">$50</option>
+                  <option value="100">$100</option>
+                  <option value="150">$150</option>
+                  <option value="200">$200</option>
+                  <option value="500">$500</option>
+                  <option value="1000">$1000</option>
+                  <option value="2000">$2000+</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn btn-primary w-100" style="margin-top: 1rem;">Apply Filter</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Products Grid -->
+      <main class="col-lg-9 col-md-8">
+        {% if product_count > 0 %}
+          <!-- Sort Dropdown -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 style="color: var(--apple-black); margin-bottom: 0;">{{ product_count }} Products</h5>
+            {% include 'store/includes/sort_dropdown.html' %}
+          </div>
+        {% endif %}
+
+        <!-- Products Display -->
+        {% if product_count > 0 %}
+          <div class="product-grid">
+            {% for product in products %}
+            <div class="product-card">
+              <a href="{{ product.get_url }}">
+                {% if product.images %}
+                  <img src="{{product.images.url}}" alt="{{product.product_name}}" class="product-image" />
+                {% else %}
+                  <img src="{{site_setting.default_image.url}}" alt="{{product.product_name}}" class="product-image" />
+                {% endif %}
+              </a>
+              <div class="product-info">
+                <a href="{{ product.get_url }}" class="product-title">
+                  {{product.product_name|truncatechars:50}}
+                </a>
+                <div class="product-price">Rs. {{product.price}}</div>
+                
+                {% if product.stock <= 0 %}
+                  <p style="color: var(--apple-red); font-size: 0.9rem; margin-bottom: 1rem;">Out of Stock</p>
+                {% elif product.stock <= 5 %}
+                  <p style="color: var(--apple-red); font-size: 0.9rem; margin-bottom: 1rem;">Only {{ product.stock }} left!</p>
+                {% endif %}
+                
+                <a href="{{product.get_url}}" class="btn btn-outline-primary w-100">View Details</a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <!-- No Results -->
+          <div class="card" style="text-align: center; padding: 4rem 2rem;">
+            <i class="fa fa-search" style="font-size: 3rem; color: var(--apple-gray-400); margin-bottom: 1.5rem;"></i>
+            <h4 style="color: var(--apple-black); margin-bottom: 1rem;">No results found</h4>
+            <p style="color: var(--apple-gray-600); margin-bottom: 2rem;">
+              We couldn't find any matches{% if keyword %} for "{{ keyword }}"{% endif %}. 
+              Try adjusting your search terms or browse our categories.
+            </p>
+            <a href="{% url 'store' %}" class="btn btn-primary">Browse All Products</a>
+          </div>
+        {% endif %}
+
+        <!-- Pagination -->
+        {% if product_count > 0 %}
+          {% include 'store/includes/pagination.html' %}
+        {% endif %}
+      </main>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
